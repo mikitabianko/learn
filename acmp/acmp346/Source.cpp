@@ -1,80 +1,120 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 
-vector<short> _a, _b, _c;
-short i, j;
-
-inline void numToArray(int a, vector<short>& v) {
-	while (a) {
-		v.push_back(a % 10);
-		a /= 10;
+inline void read(vector<int>& a) {
+	string str;
+	cin >> str;
+	for (char& c : str) {
+		a.push_back(c - '0');
 	}
 }
 
-inline void ArrayToNum(vector<short>& v, int& a) {
-	a = 0;
-	for (int i = v.size() - 1; i >= 0; --i) {
-		a += v[i];
-		a *= 10;
-	}
-	a /= 10;
+inline void removeZeros(vector<int>& a) {
+	int i = 0;
+	while (i + 1 < a.size() && a[i] == 0) ++i;
+	a.erase(a.begin(), a.begin() + i);
 }
 
-vector<short>& f(vector<short>& a, vector<short>& b, short n) {
-	if (n < _a.size())
-		return a;
-	return b;
-}
-
-inline bool f(short n = 0, short rest = 0) {
-	if (n >= _c.size() && rest) return false;
-	else if (n >= _c.size() && !rest) return true;
-
-	for (i = n; i < _a.size(); ++i) {
-		for (j = n; j < _b.size(); ++j) {
-			if (_c[n] == (rest + _a[i] + _b[j]) % 10) {
-				swap(_a[n], _a[i]);
-				swap(_b[n], _b[j]);
-				if (f(n + 1, (rest + _a[n] + _b[n]) / 10)) return true;
-				swap(_a[n], _a[i]);
-				swap(_b[n], _b[j]);
-			}
+inline vector<int> sub(vector<int>& a, vector<int>& b) {
+	reverse(a.begin(), a.end());
+	reverse(b.begin(), b.end());
+	vector<int> ans;
+	int r = 0, ta, tb;
+	for (int i = 0; i < max(a.size(), b.size()); ++i) {
+		ta = (i < a.size() ? a[i] : 0);
+		tb = (i < b.size() ? b[i] : 0);
+		if (ta < tb - r) {
+			ans.push_back(10 + ta - tb + r);
+			r = -1;
+		}
+		else {
+			ans.push_back(ta - tb + r);
+			r = 0;
 		}
 	}
-	for (i = n; i < max(_a.size(), _b.size()); ++i) {
-		if (_c[n] == (rest + f(_a, _b, n)[n]) % 10) {
-			swap(f(_a, _b, n)[n], f(_a, _b, n)[i]);
-			if (f(n + 1, (rest + f(_a, _b, n)[n]) / 10)) return true;
-			swap(f(_a, _b, n)[n], f(_a, _b, n)[i]);
-		}
+	reverse(a.begin(), a.end());
+	reverse(b.begin(), b.end());
+	reverse(ans.begin(), ans.end());
+	removeZeros(ans);
+	return ans;
+}
+
+inline bool g(vector<int>& a, vector<int>& b) {
+	if (a.size() > b.size()) return true;
+	if (a.size() < b.size()) return false;
+	for (int i = 0; i < a.size(); ++i) {
+		if (a[i] > b[i]) return true;
+		if (a[i] < b[i]) return false;
 	}
-	rest += n < f(_a, _b, n).size() ? f(_a, _b, n)[n] : 0;
-	if (rest != _c[n])
+	return false;
+}
+
+inline bool f(vector<int> a, vector<int>& b, vector<int>& c) {
+	removeZeros(a);
+
+	if (g(a, c)) {
 		return false;
-	return f(n + 1, 0);
+	}
+
+	vector<int> used(10, 0);
+	for (int& el : b) {
+		++used[el];
+	}
+
+	vector<int> d = sub(c, a);
+
+	for (int& el : d) {
+		--used[el];
+	}
+
+	for (int i = 0; i < 10; ++i) {
+		if ((i == 0 && used[i] < 0) || (i != 0 && used[i] != 0)) {
+			return false;
+		}
+	}
+
+	b = d;
+
+	return true;
+}
+
+inline void print(vector<int>& a) {
+	int i = 0;
+	while (i + 1 < a.size() && a[i] == 0) ++i;
+	for (; i < a.size(); ++i) {
+		cout << a[i];
+	}
+	cout << ' ';
 }
 
 int main() {
-	int a, b, c;
-	cin >> a >> b >> c;
+	vector<int> a, b, c;
 
-	numToArray(a, _a);
-	numToArray(b, _b);
-	numToArray(c, _c);
+	read(a);
+	read(b);
+	read(c);
 
-	sort(_a.begin(), _a.end());
-	sort(_b.begin(), _b.end());
+	removeZeros(a);
+	removeZeros(b);
+	removeZeros(c);
 
-	if (!f()) cout << "NO";
-	else {
-		cout << "YES\n";
+	sort(a.begin(), a.end());
+	sort(b.begin(), b.end());
 
-		ArrayToNum(_a, a);
-		ArrayToNum(_b, b);
+	do {
+		if (f(a, b, c)) {
+			cout << "YES\n";
+			print(a);
+			print(b);
+			return 0;
+		}
+	} while (next_permutation(a.begin(), a.end()));
 
-		cout << a << ' ' << b;
-	}
+	cout << "NO";
+
+	return 0;
 }
