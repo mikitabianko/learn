@@ -1,0 +1,1 @@
+# Consider these my notes taken during the process of learning or problem-solving.
