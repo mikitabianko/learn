@@ -1,0 +1,11 @@
+*,
+*::before,
+*::after {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
