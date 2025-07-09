@@ -1,3 +1,7 @@
+*.out
+
+Source
+
 # Logs
 logs
 *.log
