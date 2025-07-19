@@ -1,3 +1,4 @@
+// g++ -std=c++23 Source.cpp -DLOCAL && ./a.out && rm ./a.out  
 #include <iostream>
 #include <vector>
 #include <map>
@@ -14,6 +15,8 @@ typedef unsigned int uint;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double ld;
+
+#define vec vector
 
 #define fs first
 #define sc second
@@ -35,41 +38,18 @@ typedef long double ld;
 #define sortall(v) sort(ALL(v));
 #define rsortall(v) sort(rALL(v));
 
-int gcd(int a, int b) {
-    while (a != 0 && b != 0)
-        if (a > b) a %= b;
-        else b %= a;
-    return a + b;
-}
-
 void solve() {
     in(n);
-    vector<int> a(n), b(n);
-    vector<ll> c(n);
-    inv(a); inv(b);
+    vec<int> a(n);
+    inv(a);
 
-    FOR(i, 0, n) {
-        c[i] = (ll)a[i] / gcd(a[i], b[i]) * b[i];
+    FOR(i, 0, n - 1) {
+        if (a[i] > a[i + 1]) { 
+            cout << "yes\n" << 2 << "\n" << a[i] << " " << a[i + 1];
+            return;
+        }
     }
-
-    if (c[0] != a[0] || *(c.end() - 1) != *(b.end() - 1)) {
-        cout << "no"; return;
-    }
-
-    FOR(i, 1, n) { 
-        if (gcd(a[i - 1], c[i]) != a[i]) {
-            cout << "no"; return;
-        } 
-    }
-    reverse(ALL(c));
-    reverse(ALL(b));
-    FOR (i, 1, n) {
-        if (gcd(b[i - 1], c[i]) != b[i]) {
-            cout << "no"; return;
-        } 
-    }
-
-    cout << "yes";
+    cout << "no";
 }
 
 int main() {
