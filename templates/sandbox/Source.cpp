@@ -71,13 +71,6 @@ using vpd = V<pd>;
 #define rep(a) F0R(_, a)
 #define each(a, x) for (auto &a : x)
 
-#define in(x) int x; cin >> x;
-#define inll(x) ll x; cin >> x;
-#define inv(v) trav(i, v) cin >> i;
-#define invv(v) trav(i, v) inv(i);
-#define outv(v) trav(i, v) cout << i << ' ';
-#define outvv(v) trav(i, v) { outv(i); cout << '\n'; }
-
 const int MOD = 1e9+7;
 const ll BIG = 1e18;  // not too close to LLONG_MAX
 
@@ -159,13 +152,17 @@ template <class... Ts> void ps(Ts const &...ts) {
 }  // namespace IO
 
 void solve() {
-    
+    def(int, n, m);
+    V<vi> a(n, vi(m));
+    re(a);
+
+    ps(a);
 }
 
 int main() {
 #ifdef LOCAL
-    // freopen("in.txt", "r", stdin);
-    // freopen("out.txt", "w", stdout);
+    freopen("in.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
 #endif
     cin.tie(0)->sync_with_stdio(0); 
 
