@@ -23,6 +23,10 @@
         "format": "cpp",
         "ranges": "cpp",
         "text_encoding": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "chrono": "cpp",
+        "complex": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }

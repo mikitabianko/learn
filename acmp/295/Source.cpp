@@ -1,41 +1,43 @@
 #include <iostream>
-#include <string>
+#include <vector>
 #include <algorithm>
 
 using namespace std;
 
-string next(string str, int count = 1) {
-	for (auto& c : str) {
-		c = c + count;
-		if (c < 'A') {
-			c = 'Z' + c - 'A' + 1;
-		}
-		else if (c > 'Z') {
-			c = (c - 'A') % ('Z' - 'A' + 1) + 'A';
-		}
+string f(string str, int n) {
+	for (auto& el : str) {
+		el = (el - 'A' + n + 26) % 26 + 'A';
 	}
 	return str;
 }
 
+bool find(string a, string b) {
+	string str = b + "#" + a;
+	vector<int> p(str.length(), 0);
+	for (int i = 1; i < str.length(); ++i) {
+		int c = p[i - 1];
+		while (c > 0 && str[i] != str[c]) c = p[c - 1];
+		if (str[i] == str[c]) p[i] = c + 1;
+
+		if (p[i] == b.length()) return true;
+	}
+	return false;
+}
+
 int main() {
-	int n = 1e9;
-	string s1, s2, ans;
-	cin >> s1 >> s2;
+	ios_base::sync_with_stdio(0);
+	cin.tie(nullptr);
 
-	for (int i = 0; i <= 'Z' - 'A'; ++i) {
-		if (s1.find(s2) != string::npos) {
-			if (n > i % ('Z' - 'A' + 1)) {
-				ans = next(s1, -i);
-				n = i % ('Z' - 'A' + 1);
-			}
+	string a, b; cin >> a >> b;
+
+	for (int i = 0; i < 27; ++i) {
+		if (find(a, f(b, i))) {
+			cout << f(a, -i);
+			return 0;
 		}
-		s2 = next(s2);
 	}
 
-	if (ans == "") {
-		cout << "IMPOSSIBLE";
-	}
-	else {
-		cout << ans;
-	}
+	cout << "IMPOSSIBLE";
+
+	return 0;
 }
