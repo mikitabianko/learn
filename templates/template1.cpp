@@ -152,11 +152,7 @@ template <class... Ts> void ps(Ts const &...ts) {
 }  // namespace IO
 
 void solve() {
-    def(int, n, m);
-    V<vi> a(n, vi(m));
-    re(a);
-
-    ps(a);
+    
 }
 
 int main() {
