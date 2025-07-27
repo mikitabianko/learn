@@ -27,6 +27,9 @@
         "chrono": "cpp",
         "complex": "cpp",
         "tuple": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "__locale": "cpp",
+        "regex": "cpp",
+        "bitset": "cpp"
     }
 }
