@@ -26,14 +26,7 @@ typedef unsigned int uint;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double ld;
-
 using str = string;
-using u8 = uint8_t;
-using u16 = uint16_t;
-using u32 = uint32_t;
-using u64 = uint64_t;
-using i128 = __int128;
-using u128 = unsigned __int128;
 
 // pairs
 using pi = pair<int, int>;
@@ -159,17 +152,27 @@ template <class... Ts> void ps(Ts const &...ts) {
 }  // namespace IO
 
 void solve() {
-    def(int, n, m);
-    V<vi> a(n, vi(m));
-    re(a);
+    def(int, n, c);
+	vi arr(n);
+	re(arr);
 
-    ps(a);
+	sor(arr);
+
+	int count = 0;
+	ROF(i, 0, arr.size()) {
+		if (arr[i] <= c) {
+			++count;
+			c /= 2;
+		}
+	}
+
+	pr(arr.size() - count);
 }
 
 int main() {
 #ifdef LOCAL
     freopen("in.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
+    // freopen("out.txt", "w", stdout);
 #endif
     cin.tie(0)->sync_with_stdio(0); 
 

@@ -26,14 +26,7 @@ typedef unsigned int uint;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double ld;
-
 using str = string;
-using u8 = uint8_t;
-using u16 = uint16_t;
-using u32 = uint32_t;
-using u64 = uint64_t;
-using i128 = __int128;
-using u128 = unsigned __int128;
 
 // pairs
 using pi = pair<int, int>;
@@ -158,18 +151,57 @@ template <class... Ts> void ps(Ts const &...ts) {
 }
 }  // namespace IO
 
-void solve() {
-    def(int, n, m);
-    V<vi> a(n, vi(m));
-    re(a);
+bool isBad(const vector<int>& q) {
+    int n = q.size();
+    if (n < 5) return false;
+    for (int i = 0; i <= n - 5; ++i) {
+        if (q[i] < q[i+1] && q[i+1] < q[i+2] && q[i+2] < q[i+3] && q[i+3] < q[i+4])
+            return true;
+        if (q[i] > q[i+1] && q[i+1] > q[i+2] && q[i+2] > q[i+3] && q[i+3] > q[i+4])
+            return true;
+    }
+    return false;
+}
 
-    ps(a);
+void solve() {
+    def(int, n);
+	vi a(n), q;
+	q.reserve(n);
+	re(a);
+
+	int l = 0, r = n - 1;
+
+	bool p = false;
+
+	while (l <= r) {
+		bool cl = true, cr = true;
+
+		if (!p) {
+			if (a[l] < a[r]) {
+				q.push_back(a[l++]);
+				pr("L");
+			} else {
+				q.push_back(a[r--]);
+				pr("R");
+			}
+			p = true;
+		} else {
+			if (a[l] > a[r]) {
+				q.push_back(a[l++]);
+				pr("L");
+			} else {
+				q.push_back(a[r--]);
+				pr("R");
+			}
+			p = false;
+		}
+	}
 }
 
 int main() {
 #ifdef LOCAL
     freopen("in.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
+    // freopen("out.txt", "w", stdout);
 #endif
     cin.tie(0)->sync_with_stdio(0); 
 
