@@ -26,20 +26,13 @@ typedef unsigned int uint;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double ld;
-
 using str = string;
-using u8 = uint8_t;
-using u16 = uint16_t;
-using u32 = uint32_t;
-using u64 = uint64_t;
-using i128 = __int128;
-using u128 = unsigned __int128;
 
 // pairs
 using pi = pair<int, int>;
 using pl = pair<ll, ll>;
 using pd = pair<ld, ld>;
-#define mp make_pair-
+#define mp make_pair
 #define f first
 #define s second
 
@@ -159,17 +152,30 @@ template <class... Ts> void ps(Ts const &...ts) {
 }  // namespace IO
 
 void solve() {
-    def(i128, n, m);
-    V<vi> a(n, vi(m));
-    re(a);
+    def(int, n, s);
+	vi arr(n);
+	re(arr);
 
-    ps(a);
+	map<int, int> m;
+	each(el, arr) ++m[el];
+
+	if (m[2] * 2 + m[1] > s) {
+		pr(arr);
+	} else if (m[2] * 2 + m[1] == s) {
+		pr(-1);
+	} else if (m[2] * 2 + m[1] + 1 < s) {
+		pr(-1);
+	} else {
+		FOR(i, 0, m[0]) pr(0, " ");
+		FOR(i, 0, m[2]) pr(2, " ");
+		FOR(i, 0, m[1]) pr(1, " ");
+	}
 }
 
 int main() {
 #ifdef LOCAL
     freopen("in.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
+    // freopen("out.txt", "w", stdout);
 #endif
     cin.tie(0)->sync_with_stdio(0); 
 
