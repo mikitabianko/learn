@@ -152,7 +152,7 @@ template <class... Ts> void ps(Ts const &...ts) {
 }  // namespace IO
 
 void solve() {
-    
+
 }
 
 int main() {
@@ -162,11 +162,15 @@ int main() {
 #endif
     cin.tie(0)->sync_with_stdio(0); 
 
-    def(int, tt);
+    def(int, n);
 
-    while (tt--) {
-        solve();
-        cout << "\n";
+    pr("0 ");
+
+    ll sum = 0, temp;
+    FOR(i, 0, n) {
+        re(temp);
+        sum += temp;
+        pr(sum, " ");
     }
 
     return 0;

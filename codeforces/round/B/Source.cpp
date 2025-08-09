@@ -70,6 +70,10 @@ using vpd = V<pd>;
 #define R0F(i, a) ROF(i, 0, a)
 #define rep(a) F0R(_, a)
 #define each(a, x) for (auto &a : x)
+#define F0R2(i, j, a, b) F0R(i, a) F0R(j, b)
+#define F0R3(i, j, k, a, b, c) F0R(i, a) F0R2(j, k, b, c)
+#define F0R4(i, j, k, l, a, b, c, d) F0R2(i, j, a, b) F0R2(k, l, c, d)
+#define F0R5(i, j, k, l, m, a, b, c, d, e) F0R2(i, j, a, b) F0R3(k, l, m, c, d, e)
 
 const int MOD = 1e9+7;
 const ll BIG = 1e18;  // not too close to LLONG_MAX
@@ -151,8 +155,40 @@ template <class... Ts> void ps(Ts const &...ts) {
 }
 }  // namespace IO
 
+pi f(str s, int n, int x) {
+	int l = x;
+	while (l >= 0 && s[l] != '#') --l;
+	int r = x;
+	while (r < n && s[r] != '#') ++r;
+
+	int dl = l + 1;
+	int dr = n - r;
+
+	return mp(dl, dr);
+}
+
 void solve() {
-    
+	def(int, n, x);
+    def(str, s);
+
+	--x;
+
+	str s1 = s, s2 = s;
+
+	int l = x - 1;
+	while (l > 0 && s[l] != '.') --l;
+	if (l >= 0) s1[l] = '#';
+
+	int r = x + 1;
+	while (r < n - 1 && s[r] != '.') ++r;
+	if (r < n) s2[r] = '#';
+
+	auto p2 = f(s1, n, x), p3 = f(s2, n, x);
+
+	int a = min(p2.f, p2.s);
+	int b = min(p3.f, p3.s);
+
+	pr(max(a, b) + 1);
 }
 
 int main() {

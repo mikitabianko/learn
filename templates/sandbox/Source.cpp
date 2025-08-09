@@ -77,6 +77,10 @@ using vpd = V<pd>;
 #define R0F(i, a) ROF(i, 0, a)
 #define rep(a) F0R(_, a)
 #define each(a, x) for (auto &a : x)
+#define F0R2(i, j, a, b) F0R(i, a) F0R(j, b)
+#define F0R3(i, j, k, a, b, c) F0R(i, a) F0R2(j, k, b, c)
+#define F0R4(i, j, k, l, a, b, c, d) F0R2(i, j, a, b) F0R2(k, l, c, d)
+#define F0R5(i, j, k, l, m, a, b, c, d, e) F0R2(i, j, a, b) F0R3(k, l, m, c, d, e)
 
 const int MOD = 1e9+7;
 const ll BIG = 1e18;  // not too close to LLONG_MAX

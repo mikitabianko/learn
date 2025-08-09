@@ -70,6 +70,10 @@ using vpd = V<pd>;
 #define R0F(i, a) ROF(i, 0, a)
 #define rep(a) F0R(_, a)
 #define each(a, x) for (auto &a : x)
+#define F0R2(i, j, a, b) F0R(i, a) F0R(j, b)
+#define F0R3(i, j, k, a, b, c) F0R(i, a) F0R2(j, k, b, c)
+#define F0R4(i, j, k, l, a, b, c, d) F0R2(i, j, a, b) F0R2(k, l, c, d)
+#define F0R5(i, j, k, l, m, a, b, c, d, e) F0R2(i, j, a, b) F0R3(k, l, m, c, d, e)
 
 const int MOD = 1e9+7;
 const ll BIG = 1e18;  // not too close to LLONG_MAX
@@ -152,7 +156,45 @@ template <class... Ts> void ps(Ts const &...ts) {
 }  // namespace IO
 
 void solve() {
-    
+    def(int, n, k);
+	vi a(n), b(n);
+	re(a, b);
+
+	vi ind(n, 0);
+ 
+	FOR(i, 0, n) ind[i] = i;
+ 
+	sort(all(ind), [&](int& i, int& j) {
+		if (abs(a[i] - b[i]) > abs(a[j] - b[j])) return true;
+		if (abs(a[i] - b[i]) < abs(a[j] - b[j])) return false;
+		if (b[i] < b[j]) return true;
+		if (b[i] > b[j]) return false;
+		return a[i] < a[j];
+	});
+
+	auto v = [&] (vi& a, vi& b, vi& ind) {
+		ll ans = 0;
+		each(i, ind) {
+			ans += abs(a[i] - b[i]);
+		}
+		return ans;
+	};
+
+	int temp[4] = { 
+		a[ind[0]],
+		a[ind[1]],
+		b[ind[0]],
+		b[ind[1]],
+	};
+
+	sort(temp, temp + 4);
+
+	a[ind[0]] = temp[0];
+	a[ind[1]] = temp[1];
+	b[ind[0]] = temp[3];
+	b[ind[1]] = temp[2];
+
+	ps(v(a, b, ind));
 }
 
 int main() {

@@ -162,11 +162,27 @@ int main() {
 #endif
     cin.tie(0)->sync_with_stdio(0); 
 
-    def(int, tt);
+    def(int, n, m);
 
-    while (tt--) {
-        solve();
-        cout << "\n";
+    V<vi> mat(n, vi(m)); re(mat);
+
+    V<V<ll>> p(n + 2, V<ll>(m + 2, 0));
+
+    FOR(i, 0, n) {
+        FOR(j, 0, m) {
+            p[i + 1][j + 1] += mat[i][j];
+            p[i + 2][j + 1] += p[i + 1][j + 1];
+            p[i + 1][j + 2] += p[i + 1][j + 1];
+            p[i + 2][j + 2] -= p[i + 1][j + 1];
+        }
+    }
+
+    def(int, q);
+
+    while (q--) {
+        def(int, lx, ly, rx, ry);
+
+        ps(p[rx][ry] - p[lx - 1][ry] - p[rx][ly - 1] + p[lx - 1][ly - 1]);
     }
 
     return 0;

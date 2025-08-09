@@ -162,11 +162,21 @@ int main() {
 #endif
     cin.tie(0)->sync_with_stdio(0); 
 
-    def(int, tt);
+    def(int, n);
 
-    while (tt--) {
-        solve();
-        cout << "\n";
+    vi a(n); re(a);
+
+    V<ll> p = { a[0] };
+    p.reserve(n);
+
+    each(el, a) p.pb(p.back() + el);
+
+    def(int, q);
+
+    while (q--) {
+        def(int, l, r);
+
+        ps(p[r] - p[l - 1]);
     }
 
     return 0;
